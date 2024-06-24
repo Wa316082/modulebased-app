@@ -29,5 +29,5 @@ jobs:
           server: ftp.rafflestag-australia.com
           username: rafflesau@backend.rafflestag-australia.com
           password: sA({ItU{@q;h
-          server-dir: /public_html/backend.rafflestag-australia.com
+          server-dir: /public_html/backend.rafflestag-australia.com/
 
