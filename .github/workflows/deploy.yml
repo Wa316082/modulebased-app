@@ -1,0 +1,33 @@
+name: 🚀 Deploy website on push to production
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Get the latest code
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@master
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer update --prefer-dist --ignore-platform-reqs
+      - name: Generate storage link
+        run: php artisan storage:link
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ftp.rafflestag-australia.com
+          username: rafflesau@backend.rafflestag-australia.com
+          password: sA({ItU{@q;h
+          server-dir: /public_html/backend.rafflestag-australia.com
+
